@@ -16,11 +16,11 @@ const xml = `
         </mj-attributes>
     </mj-head>
     <mj-body>
-        <mj-wrapper>
+        <mj-wrapper css-class="'<><><%<{%}ø}{}{}'">
             <mj-section>
                 <mj-column>
                     <mj-text>
-                        lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem
+                        lore <<<< m lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem
                     </mj-text>
                 </mj-column>
             </mj-section>

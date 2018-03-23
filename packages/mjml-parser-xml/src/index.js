@@ -3,17 +3,14 @@ import htmlparser from 'htmlparser2'
 import isObject from 'lodash/isObject'
 import findLastIndex from 'lodash/findLastIndex'
 import find from 'lodash/find'
-import mapValues from 'lodash/mapValues'
 import path from 'path'
 import fs from 'fs'
 import filter from 'lodash/fp/filter'
 import map from 'lodash/fp/map'
 import flow from 'lodash/fp/flow'
 
-import parseAttributes, { decodeAttributes } from './helpers/parseAttributes'
 import cleanNode from './helpers/cleanNode'
 import convertBooleansOnAttrs from './helpers/convertBooleansOnAttrs'
-import addCDATASection from './helpers/addCDATASection'
 import setEmptyAttributes from './helpers/setEmptyAttributes'
 
 const indexesForNewLine = xml => {
@@ -45,8 +42,8 @@ export default function MJMLParser(xml, options = {}, includedIn = []) {
 
   let safeXml = xml
 
-  safeXml = parseAttributes(safeXml)
-  safeXml = addCDATASection(CDATASections, safeXml)
+  // safeXml = parseAttributes(safeXml)
+  // safeXml = addCDATASection(CDATASections, safeXml)
 
   let mjml = null
   let cur = null
@@ -148,15 +145,13 @@ export default function MJMLParser(xml, options = {}, includedIn = []) {
 
         if (name === 'mj-include') {
           inInclude = true
-          return handleInclude(decodeURIComponent(attrs.path), line)
+          return handleInclude(attrs.path, line)
         }
 
         if (convertBooleans) {
           // "true" and "false" will be converted to bools
           attrs = convertBooleansOnAttrs(attrs)
         }
-
-        attrs = mapValues(attrs, val => decodeURIComponent(val))
 
         const newNode = {
           file: filePath,
@@ -192,7 +187,7 @@ export default function MJMLParser(xml, options = {}, includedIn = []) {
         const val = `${(cur && cur.content) || ''}${text}`.trim()
 
         if (val) {
-          cur.content = decodeAttributes(val)
+          cur.content = val
         }
       },
       oncomment: data => {
@@ -206,7 +201,8 @@ export default function MJMLParser(xml, options = {}, includedIn = []) {
       },
     },
     {
-      xmlMode: true,
+      xmlMode: false,
+      decodeEntities: false,
     },
   )
 
